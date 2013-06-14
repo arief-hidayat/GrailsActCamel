@@ -6,11 +6,14 @@ import org.apache.commons.lang.StringUtils
 class BootStrap {
     def springSecurityService
     def sessionFactory
+    def grailsApplication
     def init = { servletContext ->
+        println "XXX security manager: ${grailsApplication.mainContext.getBean('accessDecisionManager') != null } ... ${grailsApplication.mainContext.getBean('authenticationManager') != null}"
+//        println "XXX camelAuth : ${grailsApplication.mainContext.getBean('camelUser') } ... ${grailsApplication.mainContext.getBean('camelAdmin')}"
         createDemoUserAndRole("password")
+        println "password:  ${springSecurityService.encodePassword('password')}"
     }
-    def createDemoUserAndRole(String defaultPassword) {
-        String password = springSecurityService.encodePassword(defaultPassword)
+    def createDemoUserAndRole(String password) {
         User.list().each {
             UserRole.removeAll it
         }
@@ -37,6 +40,10 @@ class BootStrap {
                 user = new User(username: name, enabled: true, password: password)
                 user.save(flush : true)
                 log.debug "Create user role ${user} ${role}"
+                sessionFactory.currentSession.flush()
+                sessionFactory.currentSession.clear()
+                user = User.get(user.id)
+                role = Role.get(role.id)
                 UserRole.create(user, role, true)
             }
         }

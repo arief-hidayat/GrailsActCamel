@@ -1,5 +1,7 @@
 package com.hida
 
+import org.springframework.security.core.context.SecurityContextHolder
+
 class SedaController {
     def springSecurityService
     def index() {
@@ -7,11 +9,10 @@ class SedaController {
     def send() {
         def msg = params.msg ?: "add params 'msg' for message."
         if(springSecurityService.isLoggedIn()) {
-            log.debug("send message to seda ${springSecurityService.authentication.name}.")
-            sendMessage("seda:${springSecurityService.authentication.name}", msg )
-//            requestMessage
+            log.debug("send message to seda ${springSecurityService.authentication.name}. ${SecurityContextHolder.context.authentication}")
+            sendMessageWithAuth("seda:${springSecurityService.authentication.name}", msg, SecurityContextHolder.context.authentication )
         } else {
-            log.error("Please log in")
+            sendMessage("seda:anyuser", msg )
         }
     }
 }

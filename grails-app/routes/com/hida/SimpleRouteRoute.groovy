@@ -14,7 +14,9 @@ class SimpleRouteRoute extends RouteBuilder {
         // example:
 //        from('seda:admin').to('stream:out').policy('admin')
 //        from('seda:user').filter { it.in.body.contains("LOG::")}.to('bean:loggingService?method=logThis').policy('user')
-        from('seda:user').policy('user').to('bean:loggingService?method=logThis')
-
+        from('seda:admin').policy('camelAdmin').to('bean:loggingService?method=logUser')
+        from('seda:user').policy('camelUser').to('bean:loggingService?method=logUser')
+        from('seda:anyuser').to('bean:loggingService?method=logAnonym')
+//        from('seda:user').to('bean:loggingService?method=logThis')
     }
 }

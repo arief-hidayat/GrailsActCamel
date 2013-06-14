@@ -81,6 +81,8 @@ log4j = {
             'grails.app.jobs',
             'grails.app.services',
             'grails.app.routes',
+            'org.codehaus.groovy.grails.plugins.springsecurity',
+            'org.apache.camel.component.spring.security.SpringSecurityAuthorizationPolicy',
                     'grails.app.services.grails.plugin',
             'grails.app.conf.BootStrap'], additivity: false
 
@@ -155,8 +157,8 @@ grails.gorm.default.mapping = {
 
 grails.routing.useSpringSecurity = true
 grails.routing.authorizationPolicies =   [
-        [id : 'user', access : 'ROLE_USER'],
-        [id : 'admin', access : 'ROLE_ADMIN']
+        [id : 'camelUser', access : 'ROLE_USER'],
+        [id : 'camelAdmin', access : 'ROLE_ADMIN']
 ]
 //grails.routing = {
 //    // you have spring-security-core installed. don't forget to add

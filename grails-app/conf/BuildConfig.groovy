@@ -54,7 +54,7 @@ grails.project.dependency.resolution = {
         compile('org.apache.camel:camel-spring-security:2.11.0') {
             excludes 'spring-security-config', 'spring-security-core'
         }
-        runtime('org.springframework.security:spring-security-config:3.0.7.RELEASE')  // follow spring-security plugin.
+//        runtime('org.springframework.security:spring-security-config:3.0.7.RELEASE')  // follow spring-security plugin.
     }
 
     plugins {
